@@ -34,10 +34,29 @@ sudo apt install apache2 libapache2-mod-wsgi-py3 -y
 echo "Generating SSL keys"
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /home/vagrant/webapp/localhost.key -out /home/vagrant/webapp/localhost.crt -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=localhost"
 
+# Copy SSL certificate and key to the appropriate locations
+echo "Copying SSL certificate and key"
+sudo cp /home/vagrant/webapp/localhost.crt /etc/ssl/certs/localhost.crt
+sudo cp /home/vagrant/webapp/localhost.key /etc/ssl/private/localhost.key
 
 # Enable mod_wsgi module
 echo "Enabling mod_wsgi module"
 sudo a2enmod wsgi
+
+# Copy the custom Apache virtual host config
+echo "Copying custom Apache virtual host config"
+sudo cp /home/vagrant/webapp/my-httpd-vhosts.conf /etc/apache2/sites-available/my-ssl.conf
+
+# Enable SSL module, configure Apache for PHP support, and enable our SSL site configuration
+echo "Configuring Apache"
+sudo a2enmod ssl
+sudo a2enmod rewrite
+sudo a2dissite 000-default default-ssl
+sudo a2ensite my-ssl
+
+# Restart Apache to apply changes
+# echo "Restarting Apache"
+# sudo systemctl restart apache2
 
 # Copy webapp directory to /var/www
 echo "Copying webapp to /var/www"
