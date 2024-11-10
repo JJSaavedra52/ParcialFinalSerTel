@@ -125,6 +125,10 @@ tar vxf prometheus*.tar.gz
 
 cd prometheus-2.43.0.linux-amd64
 
+# Modify prometheus.yml to add node exporter scrape config
+sudo sed -i '/scrape_configs:/a \ \ - job_name: "node"\n    static_configs:\n    - targets: ["localhost:9100"]' prometheus.yml
+
+# Move the modified prometheus.yml to the appropriate location
 sudo mv prometheus /usr/local/bin
 sudo mv promtool /usr/local/bin
 sudo chown prometheus:prometheus /usr/local/bin/prometheus
@@ -168,6 +172,14 @@ sudo systemctl enable prometheus
 sudo systemctl start prometheus
 sudo ufw allow 9090/tcp
 sudo systemctl status prometheus
+
+# Install Node_Exporter
+cd /home/vagrant
+wget https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
+tar xvfz node_exporter-*.*-amd64.tar.gz
+cd node_exporter-*.*-amd64
+# ./node_exporter
+
 
 # Enable the site and restart Apache
 echo "Enabling site and restarting Apache"

@@ -1,4 +1,4 @@
-# Use an official PHP image with Apache
+# Use an official Python image with Apache
 FROM python:3.9-slim
 
 # Install Vim (optional)
