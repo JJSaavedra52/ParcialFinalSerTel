@@ -26,6 +26,54 @@ pip3 install flask-cors
 pip3 install Flask-MySQLdb
 pip install Flask-SQLAlchemy
 
+# Install Apache2 to deploy
+echo "Installing Apache"
+sudo apt install apache2 libapache2-mod-wsgi-py3 -y
+
+# Generate SSL keys
+echo "Generating SSL keys"
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /home/vagrant/webapp/localhost.key -out /home/vagrant/webapp/localhost.crt -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/CN=localhost"
+
+
+# Enable mod_wsgi module
+echo "Enabling mod_wsgi module"
+sudo a2enmod wsgi
+
+# Copy webapp directory to /var/www
+echo "Copying webapp to /var/www"
+sudo cp -r /home/vagrant/webapp /var/www/webapp
+
+# Create application.wsgi file
+echo "Creating application.wsgi"
+sudo bash -c 'cat > /var/www/webapp/application.wsgi <<EOF
+#!/usr/bin/python
+import sys
+sys.path.insert(0,"/var/www/webapp/")
+from run import app as application
+EOF'
+
+# Configure Apache
+echo "Configuring Apache"
+sudo bash -c 'cat > /etc/apache2/sites-available/000-default.conf <<EOF
+WSGIScriptAlias / /var/www/webapp/application.wsgi
+DocumentRoot /var/www/webapp
+<VirtualHost *>
+    <Directory /var/www/webapp/>
+        Order deny,allow
+        Allow from all
+    </Directory>
+</VirtualHost>
+EOF'
+
+# Enable the site and restart Apache
+echo "Enabling site and restarting Apache"
+sudo a2ensite 000-default.conf
+sudo systemctl restart apache2
+
+# Check Apache configuration syntax
+echo "Checking Apache configuration syntax"
+sudo apachectl -t
+
 #Run application
 #cd /home/vagrant/webapp
 #export FLASK_APP=run.py
