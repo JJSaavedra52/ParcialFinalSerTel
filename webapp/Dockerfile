@@ -1,5 +1,5 @@
 # Use an official PHP image with Apache
-FROM php:7.4-apache
+FROM python:3.9-slim
 
 # Install Vim (optional)
 RUN apt-get update && \
@@ -19,5 +19,5 @@ RUN a2enmod ssl && \
     a2dissite 000-default default-ssl && \
     a2ensite my-ssl
 
-# Copy your PHP application into the default Apache document root
-COPY ./webapp/ /var/www/
+# Copy your Python application into the default Apache document root
+COPY . /var/www/webapp/
