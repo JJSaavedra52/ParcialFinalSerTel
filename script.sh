@@ -109,6 +109,15 @@ DocumentRoot /var/www/webapp
 </VirtualHost>
 EOF'
 
+# Enable the site and restart Apache
+echo "Enabling site and restarting Apache"
+sudo a2ensite 000-default.conf
+sudo systemctl restart apache2
+
+# Check Apache configuration syntax
+echo "Checking Apache configuration syntax"
+sudo apachectl -t
+
 # Install Prometheus
 echo "Installing Prometheus"
 sudo apt update
@@ -180,16 +189,6 @@ wget https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_e
 tar xvfz node_exporter-*.*-amd64.tar.gz
 # cd node_exporter-*.*-amd64
 # ./node_exporter
-
-
-# Enable the site and restart Apache
-echo "Enabling site and restarting Apache"
-sudo a2ensite 000-default.conf
-sudo systemctl restart apache2
-
-# Check Apache configuration syntax
-echo "Checking Apache configuration syntax"
-sudo apachectl -t
 
 #Run application
 #cd /home/vagrant/webapp
