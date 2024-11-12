@@ -10,6 +10,18 @@ vagrant ssh servidorWeb
 ## The webapp is already deployed in Apache once it's started
 # So simply go to https://192.168.60.3/ to see the app
 
+# Start Node Exporter
+
+```
+ cd /home/vagrant
+ cd node_exporter-*.*-amd64
+ ./node_exporter
+```
+# Prometheus
+# Go to http://192.168.60.3:9090
+## You'll see prometheus UI, go to Status --> Targets 
+## And you can see both targets
+
 ## Run the webApp (Local)
 
 ```
@@ -18,9 +30,9 @@ export FLASK_APP=run.py
 /usr/local/bin/flask run --host=0.0.0.0
 ```
 
-## For Docker deployment
+# For Docker deployment
 
-# Add a docker-compose.yml on /home/vagrant/ with this content:
+## Add a docker-compose.yml on /home/vagrant/ with this content:
 
 ```
 version: '3.8'

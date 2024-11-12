@@ -174,10 +174,11 @@ sudo ufw allow 9090/tcp
 sudo systemctl status prometheus
 
 # Install Node_Exporter
+echo "Installing Node Exporter"
 cd /home/vagrant
 wget https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
 tar xvfz node_exporter-*.*-amd64.tar.gz
-cd node_exporter-*.*-amd64
+# cd node_exporter-*.*-amd64
 # ./node_exporter
 
 
