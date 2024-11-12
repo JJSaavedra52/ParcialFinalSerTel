@@ -72,7 +72,7 @@ sudo a2enmod wsgi
 echo "Copying custom Apache virtual host config"
 sudo cp /home/vagrant/webapp/my-httpd-vhosts.conf /etc/apache2/sites-available/my-ssl.conf
 
-# Enable SSL module, configure Apache for PHP support, and enable our SSL site configuration
+# Enable SSL module, configure Apache for support, and enable our SSL site configuration
 echo "Configuring Apache"
 sudo a2enmod ssl
 sudo a2enmod rewrite
