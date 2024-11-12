@@ -22,6 +22,7 @@ export FLASK_APP=run.py
 
 # Add a docker-compose.yml on /home/vagrant/ with this content:
 
+```
 version: '3.8'
 
 services:
@@ -54,6 +55,7 @@ services:
       # MYSQL_DATABASE: myflaskapp
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+```
 
 # Then use:
 
