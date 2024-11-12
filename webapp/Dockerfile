@@ -55,6 +55,12 @@ RUN echo "Setting permissions and ownership" && \
     chmod 644 /etc/ssl/certs/localhost.crt && \
     chmod 600 /etc/ssl/private/localhost.key
 
+# Create application.wsgi inside the Docker container
+RUN echo "#!/usr/bin/python\n\
+import sys\n\
+sys.path.insert(0,\"/var/www/webapp/\")\n\
+from run import app as application" > /var/www/webapp/application.wsgi
+
 # Expose ports
 EXPOSE 80 443
 
