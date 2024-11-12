@@ -18,6 +18,7 @@ vagrant ssh servidorWeb
  ./node_exporter
 ```
 # Prometheus
+## All prometheus configuration is done during the vagrant up thanks to the script.sh file
 # Go to http://192.168.60.3:9090
 ## You'll see prometheus UI, go to Status --> Targets 
 ## And you can see both targets
